@@ -1,4 +1,4 @@
-package br.com.tockinha.crud_cursos;
+package br.com.tockinha.crud_cursos.module;
 
 public enum CourseStatus {
 

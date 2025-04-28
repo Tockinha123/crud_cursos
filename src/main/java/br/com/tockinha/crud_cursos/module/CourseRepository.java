@@ -1,4 +1,4 @@
-package br.com.tockinha.crud_cursos;
+package br.com.tockinha.crud_cursos.module;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
