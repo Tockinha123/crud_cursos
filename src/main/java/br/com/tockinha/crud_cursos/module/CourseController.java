@@ -5,10 +5,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/courses")
@@ -20,5 +17,10 @@ public class CourseController {
     @PostMapping("/")
     public ResponseEntity<Object> createCourse (@RequestBody @Valid CourseRequestDTO courseRequestDTO) {
         return new ResponseEntity<>(courseService.create(courseRequestDTO), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<Object> listCourses () {
+        return new ResponseEntity<>(courseService.listAll(), HttpStatus.OK);
     }
 }

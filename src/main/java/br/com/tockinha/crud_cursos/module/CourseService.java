@@ -4,6 +4,8 @@ import br.com.tockinha.crud_cursos.module.dto.CourseRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CourseService {
 
@@ -20,6 +22,9 @@ public class CourseService {
         return courseRepository.save(course);
     }
 
+    public List<CourseEntity> listAll () {
+        return courseRepository.findAll();
+    }
 
 
 }
