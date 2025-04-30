@@ -1,6 +1,4 @@
 package br.com.tockinha.crud_cursos.module.dto;
-
-import br.com.tockinha.crud_cursos.module.CourseStatus;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -12,6 +10,4 @@ public class CourseRequestDTO {
 
     @NotBlank(message = "Category is required")
     private String category;
-
-    private CourseStatus active;
 }

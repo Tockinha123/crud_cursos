@@ -33,8 +33,21 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CourseEntity> updateCourse (@PathVariable Long id, CourseRequestDTO courseRequestDTO) {
+    public ResponseEntity<CourseEntity> updateCourse
+                                        (@PathVariable Long id,
+                                         @RequestBody CourseRequestDTO courseRequestDTO) {
+
         return ResponseEntity.status(HttpStatus.OK).body(courseService.update(id, courseRequestDTO));
+    }
+
+    @PatchMapping("/{id}/active")
+    public ResponseEntity<CourseEntity> toggleActive (@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.updateActive(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCourse (@PathVariable Long id){
+        courseService.delete(id);
     }
 
 }

@@ -18,7 +18,7 @@ public class CourseService {
         CourseEntity course = CourseEntity.builder()
                 .name(courseRequestDTO.getName())
                 .category(courseRequestDTO.getCategory())
-                .active(courseRequestDTO.getActive())
+                .active(CourseStatus.ACTIVE)
                 .build();
 
         return courseRepository.save(course);
@@ -41,11 +41,34 @@ public class CourseService {
                 () -> new CourseNotFoundException("Course not Found")
         );
 
-        course.setActive(courseRequestDTO.getActive());
         course.setName(courseRequestDTO.getName());
         course.setCategory(courseRequestDTO.getCategory());
 
+        courseRepository.save(course);
+
         return course;
+    }
+
+    // Eu não sei se era exatamente isso que essa rota desejava.
+    public CourseEntity updateActive (Long id) {
+        var course = courseRepository.findById(id).orElseThrow(
+                () -> new CourseNotFoundException("Course not found.")
+        );
+
+        course.setActive((course.getActive() == CourseStatus.ACTIVE) ? CourseStatus.INACTIVE : CourseStatus.ACTIVE);
+
+        courseRepository.save(course);
+
+        return course;
+    }
+
+    public void delete (Long id) {
+        var course = courseRepository.findById(id).orElseThrow(
+                () -> new CourseNotFoundException("Course not Found")
+        );
+
+        courseRepository.delete(course);
+
     }
 
 
