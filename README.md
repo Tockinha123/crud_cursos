@@ -1,4 +1,4 @@
-# Crud_Cursos
+# CRUD para plataforma de Cursos
 
 **Este projeto foi criado como atividade prática da Trilha Java da Rocketseat.**
 
