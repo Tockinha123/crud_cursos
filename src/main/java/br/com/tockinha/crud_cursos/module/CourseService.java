@@ -1,5 +1,7 @@
 package br.com.tockinha.crud_cursos.module;
 
+import br.com.tockinha.crud_cursos.exceptions.CourseNotFoundException;
+import br.com.tockinha.crud_cursos.module.dto.CourseInfo;
 import br.com.tockinha.crud_cursos.module.dto.CourseRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +24,28 @@ public class CourseService {
         return courseRepository.save(course);
     }
 
-    public List<CourseEntity> listAll () {
-        return courseRepository.findAll();
+    public List<CourseInfo> listAll () {
+        return courseRepository.findAllByOrderByCreatedAtDesc();
+    }
+
+    public CourseInfo list (Long id) {
+        var course = courseRepository.findCourseEntityById(id).orElseThrow(
+                () -> new CourseNotFoundException("Course not found.")
+        );
+
+        return course;
+    }
+
+    public CourseEntity update (Long id, CourseRequestDTO courseRequestDTO) {
+        var course = courseRepository.findById(id).orElseThrow(
+                () -> new CourseNotFoundException("Course not Found")
+        );
+
+        course.setActive(courseRequestDTO.getActive());
+        course.setName(courseRequestDTO.getName());
+        course.setCategory(courseRequestDTO.getCategory());
+
+        return course;
     }
 
 

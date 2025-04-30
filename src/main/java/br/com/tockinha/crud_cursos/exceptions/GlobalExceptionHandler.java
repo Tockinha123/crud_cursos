@@ -31,9 +31,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, List<String>>>
     handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-        List<String> errors = List.of("This field only accepts the following values: ACTIVE or INACTIVE.");
+        List<String> error = List.of("This field only accepts the following values: ACTIVE or INACTIVE.");
 
-        return new ResponseEntity<>(getErrosMap(errors), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(getErrosMap(error), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CourseNotFoundException.class)
+    ResponseEntity<Map<String, List<String>>>
+    handleCourseNotFoundException(CourseNotFoundException ex){
+        List<String> error = List.of(ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(getErrosMap(error));
     }
 
     private Map<String, List<String>> getErrosMap(List<String> errors){

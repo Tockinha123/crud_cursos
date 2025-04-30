@@ -1,11 +1,14 @@
 package br.com.tockinha.crud_cursos.module;
 
+import br.com.tockinha.crud_cursos.module.dto.CourseInfo;
 import br.com.tockinha.crud_cursos.module.dto.CourseRequestDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/courses")
@@ -15,12 +18,23 @@ public class CourseController {
     private CourseService courseService;
 
     @PostMapping("/")
-    public ResponseEntity<Object> createCourse (@RequestBody @Valid CourseRequestDTO courseRequestDTO) {
-        return new ResponseEntity<>(courseService.create(courseRequestDTO), HttpStatus.CREATED);
+    public ResponseEntity<CourseEntity> createCourse (@RequestBody @Valid CourseRequestDTO courseRequestDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(courseService.create(courseRequestDTO));
     }
 
     @GetMapping("/")
-    public ResponseEntity<Object> listCourses () {
-        return new ResponseEntity<>(courseService.listAll(), HttpStatus.OK);
+    public ResponseEntity<List<CourseInfo>> listCourses () {
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.listAll());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CourseInfo> listCourse (@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.list(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CourseEntity> updateCourse (@PathVariable Long id, CourseRequestDTO courseRequestDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.update(id, courseRequestDTO));
+    }
+
 }
